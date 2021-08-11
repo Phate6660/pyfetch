@@ -23,13 +23,21 @@ def read_file(file):
     except:
         return "[ERROR]: could not open '" + file + "'"
 
+def get_music():
+    import musicpd
+    cli = musicpd.MPDClient()
+    cli.connect()
+    artist = cli.currentsong().get("artist")
+    title = cli.currentsong().get("title")
+    return f"{artist} - {title}"
+
 def get_packages(mngr):
     if mngr != "portage":
         return("[ERROR]: sorry, only portage is supported right now")
     with open("/var/lib/portage/world", "r") as w:
         explicit = str(len(w.readlines()))
     total = str(len(glob.glob("/var/db/pkg/*/*")))
-    return explicit + " (explicit) " + total + " (total)"
+    return f"{explicit} (explicit) {total} (total)"
 
 def get_uptime():
     raw_uptime = int(read_file("/proc/uptime").split('.')[0])
@@ -39,19 +47,21 @@ def get_uptime():
         hours   = str((raw_uptime / 60 / 60) % 24).split('.')[0] + 'h'
     if raw_uptime > 60:
         minutes = str((raw_uptime / 60) % 60).split('.')[0]      + 'm'
-    return days + ' ' + hours + ' ' + minutes
+    return f"{days} {hours} {minutes}"
 
-cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
-distro   = get_distro()
-editor   = env['EDITOR']
-hostname = gethostname()
-kernel   = read_file("/proc/sys/kernel/osrelease")
-packages = get_packages("portage")
-shell    = env['SHELL']
-uptime   = get_uptime()
-user     = env['USER']
+def main():
+    cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
+    distro   = get_distro()
+    editor   = env['EDITOR']
+    hostname = gethostname()
+    kernel   = read_file("/proc/sys/kernel/osrelease")
+    packages = get_packages("portage")
+    shell    = env['SHELL']
+    uptime   = get_uptime()
+    user     = env['USER']
+    music    = get_music()
 
-print(f"""
+    print(f"""
 cpu      = {cpu}
 distro   = {distro}
 editor   = {editor}
@@ -61,4 +71,8 @@ packages = {packages}
 shell    = {shell}   
 uptime   = {uptime}  
 user     = {user}
-""")
+music    = {music}
+    """)
+
+if __name__ == '__main__':
+    main()
