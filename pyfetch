@@ -33,11 +33,11 @@ def get_packages(mngr):
 def get_uptime():
     raw_uptime = int(read_file("/proc/uptime").split('.')[0])
     if raw_uptime > 86400:
-        days = str(raw_uptime / 60 / 60 / 24).split('.')[0] + 'd'
+        days    = str(raw_uptime / 60 / 60 / 24).split('.')[0]   + 'd'
     if raw_uptime > 3600:
-        hours = str((raw_uptime / 60 / 60) % 24).split('.')[0] + 'h'
+        hours   = str((raw_uptime / 60 / 60) % 24).split('.')[0] + 'h'
     if raw_uptime > 60:
-        minutes = str((raw_uptime / 60) % 60).split('.')[0] + 'm'
+        minutes = str((raw_uptime / 60) % 60).split('.')[0]      + 'm'
     return days + ' ' + hours + ' ' + minutes
 
 cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
@@ -50,12 +50,14 @@ shell    = env['SHELL']
 uptime   = get_uptime()
 user     = env['USER']
 
-print("cpu      = " + cpu      + "\n" +
-      "distro   = " + distro   + "\n" +
-      "editor   = " + editor   + "\n" +
-      "hostname = " + hostname + "\n" +
-      "kernel   = " + kernel   + "\n" +
-      "packages = " + packages + "\n" +
-      "shell    = " + shell    + "\n" +
-      "uptime   = " + uptime   + "\n" +
-      "user     = " + user)
+print(f"""
+cpu      = {cpu}
+distro   = {distro}
+editor   = {editor}
+hostname = {hostname}
+kernel   = {kernel}  
+packages = {packages}
+shell    = {shell}   
+uptime   = {uptime}  
+user     = {user}
+""")
