@@ -2,7 +2,7 @@
 
 from os import environ as env
 from socket import gethostname
-import glob
+import glob, sys
 
 def get_line(file, linenum):
     try:
@@ -59,7 +59,10 @@ def main():
     shell    = env['SHELL']
     uptime   = get_uptime()
     user     = env['USER']
-    music    = get_music()
+    if ("-m" in sys.argv):
+        music = get_music()
+    else:
+        music = "[N/A]: -m was not not supplied"
 
     print(f"""
 cpu      = {cpu}
