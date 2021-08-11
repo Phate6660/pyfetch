@@ -3,7 +3,7 @@ $ ./pyfetch
 cpu      = Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz
 distro   = Gentoo/Linux
 editor   = /usr/bin/nvim
-hostname = [ERROR]: could not open '/etc/hostname'
+hostname = gentoo
 kernel   = 5.10.52-gentoo-VALLEY
 packages = 88 (explicit) 674 (total)
 shell    = /bin/bash
