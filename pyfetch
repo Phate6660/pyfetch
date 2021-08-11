@@ -10,9 +10,6 @@ def get_line(file, linenum):
     except:
         return "[ERROR]: could not open '" + file + "'"
 
-def get_cpu():
-    return get_line("/proc/cpuinfo", 5).split(':')[1]
-
 def get_distro():
     line = get_line("/etc/os-release", 3)
     return line.split('=')[1].replace('"', "")
@@ -43,7 +40,7 @@ def get_uptime():
         minutes = str((raw_uptime / 60) % 60).split('.')[0] + 'm'
     return days + ' ' + hours + ' ' + minutes
 
-cpu      = get_cpu()
+cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
 distro   = get_distro()
 editor   = env['EDITOR']
 hostname = read_file("/etc/hostname")
@@ -53,7 +50,7 @@ shell    = env['SHELL']
 uptime   = get_uptime()
 user     = env['USER']
 
-print("cpu      = " + cpu[1:]  + "\n" +
+print("cpu      = " + cpu      + "\n" +
       "distro   = " + distro   + "\n" +
       "editor   = " + editor   + "\n" +
       "hostname = " + hostname + "\n" +
