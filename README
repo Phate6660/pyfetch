@@ -1,4 +1,5 @@
 $ ./pyfetch
+cpu      = Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz
 distro   = Gentoo/Linux
 editor   = /usr/bin/nvim
 hostname = [ERROR]: could not open '/etc/hostname'
