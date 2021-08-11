@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import os
+env = os.environ
+
+def get_line(file, linenum):
+    try:
+        with open(file, "r") as f:
+            return f.readlines()[linenum - 1].replace("\n", "")
+    except:
+        return "[N/A]: could not open '" + file + "'"
+
+def get_distro():
+    line = get_line("/etc/os-release", 3)
+    return line.split('=')[1].replace('"', "")
+
+def read_file(file):
+    try:
+        with open(file, "r") as f:
+            content = f.read().replace("\n", "")
+            return content
+    except:
+        return "[N/A]: could not open '" + file + "'"
+
+def get_uptime():
+    raw_uptime = int(read_file("/proc/uptime").split('.')[0])
+    if raw_uptime > 86400:
+        days = str(raw_uptime / 60 / 60 / 24).split('.')[0] + 'd'
+    if raw_uptime > 3600:
+        hours = str((raw_uptime / 60 / 60) % 24).split('.')[0] + 'h'
+    if raw_uptime > 60:
+        minutes = str((raw_uptime / 60) % 60).split('.')[0] + 'm'
+    return days + ' ' + hours + ' ' + minutes
+
+distro   = get_distro()
+editor   = env['EDITOR']
+hostname = read_file("/etc/hostname")
+kernel   = read_file("/proc/sys/kernel/osrelease")
+shell    = env['SHELL']
+uptime   = get_uptime()
+user     = env['USER']
+
+print("distro   = " + distro   + "\n" +
+      "editor   = " + editor   + "\n" +
+      "hostname = " + hostname + "\n" +
+      "kernel   = " + kernel   + "\n" +
+      "shell    = " + shell    + "\n" +
+      "uptime   = " + uptime   + "\n" +
+      "user     = " + user)

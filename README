@@ -1,0 +1,8 @@
+$ ./pyfetch
+distro   = Gentoo/Linux
+editor   = /usr/bin/nvim
+hostname = [N/A]: could not open '/etc/hostname'
+kernel   = 5.10.52-gentoo-VALLEY
+shell    = /bin/bash
+uptime   = 4d 22h 42m
+user     = valley
