@@ -9,7 +9,7 @@ def get_line(file, linenum):
         with open(file, "r") as f:
             return f.readlines()[linenum - 1].replace("\n", "")
     except:
-        return "[ERROR]: could not open '" + file + "'"
+        return f"[ERROR]: could not open '{file}'"
 
 def get_distro():
     line = get_line("/etc/os-release", 3)
@@ -21,7 +21,7 @@ def read_file(file):
             content = f.read().replace("\n", "")
             return content
     except:
-        return "[ERROR]: could not open '" + file + "'"
+        return f"[ERROR]: could not open '{file}'"
 
 def get_music():
     import musicpd
