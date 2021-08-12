@@ -5,6 +5,7 @@ from socket import gethostname
 import glob, sys
 
 def get_line(file, linenum):
+    """Get the line of a file."""
     try:
         with open(file, "r") as f:
             return f.readlines()[linenum - 1].replace("\n", "")
@@ -16,6 +17,7 @@ def get_distro():
     return line.split('=')[1].replace('"', "")
 
 def read_file(file):
+    """Get the contents of a file."""
     try:
         with open(file, "r") as f:
             content = f.read().replace("\n", "")
@@ -55,22 +57,21 @@ def get_uptime():
         minutes = ""
     return f"{days} {hours} {minutes}".strip()
 
-def main():
-    cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
-    distro   = get_distro()
-    editor   = env['EDITOR']
-    hostname = gethostname()
-    kernel   = read_file("/proc/sys/kernel/osrelease")
-    packages = get_packages("portage")
-    shell    = env['SHELL']
-    uptime   = get_uptime()
-    user     = env['USER']
-    if ("-m" in sys.argv):
-        music = get_music()
-    else:
-        music = "[N/A]: -m was not not supplied"
-
-    print(f"""
+cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
+distro   = get_distro()
+editor   = env['EDITOR']
+hostname = gethostname()
+kernel   = read_file("/proc/sys/kernel/osrelease")
+packages = get_packages("portage")
+shell    = env['SHELL']
+uptime   = get_uptime()
+user     = env['USER']
+if ("-m" in sys.argv):
+    music = get_music()
+else:
+    music = "[N/A]: -m was not not supplied"
+    
+print(f"""
 cpu      = {cpu}
 distro   = {distro}
 editor   = {editor}
@@ -81,7 +82,4 @@ shell    = {shell}
 uptime   = {uptime}  
 user     = {user}
 music    = {music}
-    """)
-
-if __name__ == '__main__':
-    main()
+""")
