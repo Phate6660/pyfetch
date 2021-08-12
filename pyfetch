@@ -43,11 +43,17 @@ def get_uptime():
     raw_uptime = int(read_file("/proc/uptime").split('.')[0])
     if raw_uptime > 86400:
         days    = str(raw_uptime / 60 / 60 / 24).split('.')[0]   + 'd'
+    else:
+        days = ""
     if raw_uptime > 3600:
         hours   = str((raw_uptime / 60 / 60) % 24).split('.')[0] + 'h'
+    else:
+        hours = ""
     if raw_uptime > 60:
         minutes = str((raw_uptime / 60) % 60).split('.')[0]      + 'm'
-    return f"{days} {hours} {minutes}"
+    else:
+        minutes = ""
+    return f"{days} {hours} {minutes}".strip()
 
 def main():
     cpu      = get_line("/proc/cpuinfo", 5).split(':')[1][1:]
